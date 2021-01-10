@@ -11,7 +11,10 @@ import com.sda.coursemanger.lesson.model.LessonBlock;
 import com.sda.coursemanger.user.UserRepository;
 import com.sda.coursemanger.user.model.Role;
 import com.sda.coursemanger.user.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -19,8 +22,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Profile("db-init")
 @Component
 public class DbInitilizer implements CommandLineRunner {
+
+    private final ConfigurableApplicationContext context;
 
     private final LessonRepository lessonRepository;
     private final LessonBlockRepository lessonBlockRepository;
@@ -30,17 +36,19 @@ public class DbInitilizer implements CommandLineRunner {
 
     public DbInitilizer(LessonRepository lessonRepository, LessonBlockRepository lessonBlockRepository,
                         CourseRepository courseRepository, CourseEnrollmentRepository courseEnrollmentRepository,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        ConfigurableApplicationContext context) {
         this.lessonRepository = lessonRepository;
         this.lessonBlockRepository = lessonBlockRepository;
         this.courseRepository = courseRepository;
         this.courseEnrollmentRepository = courseEnrollmentRepository;
         this.userRepository = userRepository;
+        this.context = context;
     }
 
     @Override
-    public void run(String... args) throws Exception {
-//        flushDatabase();
+    public void run(String... args) {
+        flushDatabase();
         if (userRepository.count() == 0) {
             User participant = initUser("user", "pass", Role.PARTICIPANT);
             Course javaCourse = initCourse("java basics");
@@ -51,6 +59,8 @@ public class DbInitilizer implements CommandLineRunner {
             enrollment.setCourse(javaCourse);
             courseEnrollmentRepository.save(enrollment);
         }
+
+        context.close();
     }
 
     private User initUser(String login, String pass, Role type) {

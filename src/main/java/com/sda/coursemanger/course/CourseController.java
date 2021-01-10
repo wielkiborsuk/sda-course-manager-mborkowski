@@ -1,9 +1,11 @@
 package com.sda.coursemanger.course;
 
 import com.sda.coursemanger.course.model.Course;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.sda.coursemanger.course.model.dto.CourseDetailsDto;
+import com.sda.coursemanger.course.model.dto.CourseDto;
+import javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +19,20 @@ public class CourseController {
     }
 
     @GetMapping("/courses/")
-    public List<Course> getAllCourses() {
-        return repository.findAll();
+    public List<CourseDto> getAllCourses() {
+        return CourseMapper.mapCourseToDtoList(repository.findAll());
+    }
+
+    @GetMapping("/courses/{id}")
+    public CourseDetailsDto getSingleCourse(@PathVariable long id) throws NotFoundException {
+        Course course = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("course not found"));
+        return CourseMapper.mapCourseToDetailsDto(course);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public String handleException() {
+        return "got an 404 error";
     }
 }
