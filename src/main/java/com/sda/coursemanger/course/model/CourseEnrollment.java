@@ -1,4 +1,6 @@
-package com.sda.coursemanger.model;
+package com.sda.coursemanger.course.model;
+
+import com.sda.coursemanger.user.model.User;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,6 @@
-package com.sda.coursemanger.model;
+package com.sda.coursemanger.course.model;
+
+import com.sda.coursemanger.lesson.model.LessonBlock;
 
 import javax.persistence.*;
 import java.util.List;

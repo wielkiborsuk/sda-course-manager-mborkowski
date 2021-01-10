@@ -1,7 +1,7 @@
 package com.sda.coursemanger.config;
 
-import com.sda.coursemanger.LessonRepository;
-import com.sda.coursemanger.model.Lesson;
+import com.sda.coursemanger.lesson.LessonRepository;
+import com.sda.coursemanger.lesson.model.Lesson;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

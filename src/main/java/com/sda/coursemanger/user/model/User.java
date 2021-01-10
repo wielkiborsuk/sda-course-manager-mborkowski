@@ -1,4 +1,4 @@
-package com.sda.coursemanger.model;
+package com.sda.coursemanger.user.model;
 
 import javax.persistence.*;
 

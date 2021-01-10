@@ -1,4 +1,4 @@
-package com.sda.coursemanger.model;
+package com.sda.coursemanger.lesson.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
