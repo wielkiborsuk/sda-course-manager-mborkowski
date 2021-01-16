@@ -3,13 +3,12 @@ package com.sda.coursemanger.user;
 import com.sda.coursemanger.user.model.User;
 import com.sda.coursemanger.user.model.dto.UserDto;
 import javassist.NotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     private UserRepository userRepository;

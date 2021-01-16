@@ -9,6 +9,7 @@ import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 public class LessonController {
 
     private LessonBlockRepository lessonBlockRepository;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -14,6 +14,8 @@ export class UserService {
   }
 
   public getUserList(): Observable<User[]> {
-    return this.httpClient.get<User[]>('http://localhost:8080/users/');
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
+    return this.httpClient.get<User[]>('/api/users/', {headers: headers});
   }
 }
