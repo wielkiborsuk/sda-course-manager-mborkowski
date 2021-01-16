@@ -1,13 +1,14 @@
 package com.sda.coursemanger.course.model.dto;
 
 import com.sda.coursemanger.lesson.model.LessonBlock;
+import com.sda.coursemanger.lesson.model.dto.LessonBlockDetailsDto;
 
 import java.util.List;
 
 public class CourseDetailsDto {
     private long id;
     private String name;
-    private List<LessonBlock> lessonBlocks;
+    private List<LessonBlockDetailsDto> lessonBlocks;
 
     public long getId() {
         return id;
@@ -25,11 +26,11 @@ public class CourseDetailsDto {
         this.name = name;
     }
 
-    public List<LessonBlock> getLessonBlocks() {
+    public List<LessonBlockDetailsDto> getLessonBlocks() {
         return lessonBlocks;
     }
 
-    public void setLessonBlocks(List<LessonBlock> lessonBlocks) {
+    public void setLessonBlocks(List<LessonBlockDetailsDto> lessonBlocks) {
         this.lessonBlocks = lessonBlocks;
     }
 }

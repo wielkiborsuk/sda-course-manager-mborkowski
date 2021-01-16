@@ -4,8 +4,9 @@ import com.sda.coursemanger.course.model.Course;
 import com.sda.coursemanger.course.model.dto.CourseDetailsDto;
 import com.sda.coursemanger.course.model.dto.CourseDto;
 import javassist.NotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -28,11 +29,5 @@ public class CourseController {
         Course course = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("course not found"));
         return CourseMapper.mapCourseToDetailsDto(course);
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundException.class)
-    public String handleException() {
-        return "got an 404 error";
     }
 }
