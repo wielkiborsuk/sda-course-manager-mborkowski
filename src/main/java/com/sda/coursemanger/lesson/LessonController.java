@@ -21,6 +21,14 @@ public class LessonController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/lessonblocks/{id}")
+    public LessonBlockDetailsDto getSingleLessonBlock(@PathVariable Long id) throws NotFoundException {
+        LessonBlock lessonBlock = lessonBlockRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("lesson block not found"));
+
+        return LessonMapper.mapLessonBlockToDto(lessonBlock);
+    }
+
     @PutMapping("/lessonblocks/{id}")
     public LessonBlockDetailsDto updateLessonBlock(@PathVariable Long id,
                                                    @RequestBody LessonBlockUpdateForm newLessonBlock) throws NotFoundException {

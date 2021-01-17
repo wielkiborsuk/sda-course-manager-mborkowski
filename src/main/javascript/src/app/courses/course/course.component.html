@@ -5,7 +5,7 @@
     <li *ngFor="let block of course.lessonBlocks">
       <p>{{block.id}} {{block.subject}}</p>
       <p *ngIf="block.teacherId" >{{block.teacherId}} <a routerLink="/users/{{block.teacherId}}">{{block.teacherName}}</a></p>
-      <p *ngIf="!block.teacherId" ><a routerLink="/courses/assign-teacher">no teacher</a></p>
+      <p *ngIf="!block.teacherId" ><a routerLink="/courses/assign-teacher" [queryParams]="{lessonBlockId: block.id}">no teacher</a></p>
       <ul>
         <li *ngFor="let lesson of block.lessons">
           <p>{{lesson.subject}} {{lesson.date}}</p>
