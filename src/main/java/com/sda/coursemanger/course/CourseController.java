@@ -1,13 +1,14 @@
 package com.sda.coursemanger.course;
 
 import com.sda.coursemanger.course.model.Course;
+import com.sda.coursemanger.course.model.CourseEnrollment;
 import com.sda.coursemanger.course.model.dto.CourseDetailsDto;
 import com.sda.coursemanger.course.model.dto.CourseDto;
+import com.sda.coursemanger.course.model.dto.CourseEnrollmentForm;
+import com.sda.coursemanger.user.UserRepository;
+import com.sda.coursemanger.user.model.User;
 import javassist.NotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,21 +16,43 @@ import java.util.List;
 @RequestMapping("/api")
 public class CourseController {
 
-    private CourseRepository repository;
+    private CourseRepository courseRepository;
+    private UserRepository userRepository;
+    private CourseEnrollmentRepository courseEnrollmentRepository;
 
-    public CourseController(CourseRepository repository) {
-        this.repository = repository;
+    public CourseController(CourseRepository courseRepository, UserRepository userRepository,
+                            CourseEnrollmentRepository courseEnrollmentRepository) {
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+        this.courseEnrollmentRepository = courseEnrollmentRepository;
     }
 
     @GetMapping("/courses/")
     public List<CourseDto> getAllCourses() {
-        return CourseMapper.mapCourseToDtoList(repository.findAll());
+        return CourseMapper.mapCourseToDtoList(courseRepository.findAll());
     }
 
     @GetMapping("/courses/{id}")
     public CourseDetailsDto getSingleCourse(@PathVariable long id) throws NotFoundException {
-        Course course = repository.findById(id)
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("course not found"));
         return CourseMapper.mapCourseToDetailsDto(course);
+    }
+
+
+    @PostMapping("/enrollments/")
+    public CourseEnrollment enrollParticipant(@RequestBody CourseEnrollmentForm newEnrollment) throws NotFoundException {
+        Course course = courseRepository.findById(newEnrollment.getCourseId())
+                .orElseThrow(() -> new NotFoundException("course not found"));
+
+        User participant = userRepository.findById(newEnrollment.getParticipantId())
+                .orElseThrow(() -> new NotFoundException("course not found"));
+
+        CourseEnrollment enrollment = new CourseEnrollment();
+        enrollment.setCourse(course);
+        enrollment.setParticipant(participant);
+        CourseEnrollment savedEnrollment = courseEnrollmentRepository.save(enrollment);
+
+        return savedEnrollment;
     }
 }

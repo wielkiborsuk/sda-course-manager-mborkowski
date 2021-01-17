@@ -1,6 +1,9 @@
-<p>user-list works!</p>
+<p>user-list:</p>
 
-<p>hello</p>
 <ul>
-  <li *ngFor="let user of users">{{user.id}} {{user.name}} {{user.type}}</li>
+  <li *ngFor="let user of users">
+    {{user.id}}
+    <a routerLink="/users/{{user.id}}">{{user.name}}</a>
+    {{user.type}}
+  </li>
 </ul>

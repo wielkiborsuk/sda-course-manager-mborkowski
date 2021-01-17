@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
-import {User} from "./user";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Course} from "./course";
+import {CourseDetails} from "./course-details";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-  private httpClient: HttpClient;
+export class CourseService {
 
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-  }
+  constructor(private httpClient: HttpClient) { }
 
-  public getUserList(): Observable<User[]> {
+  public getCourses(): Observable<Course[]> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<User[]>('/api/users/', {headers: headers});
+    return this.httpClient.get<Course[]>("/api/courses/", {headers: headers})
   }
 
-  public getUser(id: number): Observable<User> {
+  public getCourse(id: number): Observable<CourseDetails> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<User>('/api/users/' + id, {headers: headers});
+    return this.httpClient.get<CourseDetails>("/api/courses/" + id, {headers: headers})
   }
 }
