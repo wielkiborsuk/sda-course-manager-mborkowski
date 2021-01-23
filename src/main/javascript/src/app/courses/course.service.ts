@@ -12,14 +12,10 @@ export class CourseService {
   constructor(private httpClient: HttpClient) { }
 
   public getCourses(): Observable<Course[]> {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<Course[]>("/api/courses/", {headers: headers})
+    return this.httpClient.get<Course[]>("/api/courses/")
   }
 
   public getCourse(id: number): Observable<CourseDetails> {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<CourseDetails>("/api/courses/" + id, {headers: headers})
+    return this.httpClient.get<CourseDetails>("/api/courses/" + id)
   }
 }

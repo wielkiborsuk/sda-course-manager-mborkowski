@@ -14,20 +14,14 @@ export class UserService {
   }
 
   public getUserList(): Observable<User[]> {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<User[]>('/api/users/', {headers: headers});
+    return this.httpClient.get<User[]>('/api/users/');
   }
 
   public getTeacherList(): Observable<User[]> {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<User[]>('/api/users/?type=TEACHER', {headers: headers});
+    return this.httpClient.get<User[]>('/api/users/?type=TEACHER');
   }
 
   public getUser(id: number): Observable<User> {
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
-    return this.httpClient.get<User>('/api/users/' + id, {headers: headers});
+    return this.httpClient.get<User>('/api/users/' + id);
   }
 }
