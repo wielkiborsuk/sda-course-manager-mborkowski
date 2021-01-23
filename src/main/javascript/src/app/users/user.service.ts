@@ -19,6 +19,12 @@ export class UserService {
     return this.httpClient.get<User[]>('/api/users/', {headers: headers});
   }
 
+  public getTeacherList(): Observable<User[]> {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
+    return this.httpClient.get<User[]>('/api/users/?type=TEACHER', {headers: headers});
+  }
+
   public getUser(id: number): Observable<User> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));

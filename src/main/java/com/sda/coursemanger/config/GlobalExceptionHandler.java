@@ -1,6 +1,6 @@
 package com.sda.coursemanger.config;
 
-import javassist.NotFoundException;
+import com.sda.coursemanger.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,8 +1,9 @@
 package com.sda.coursemanger.user;
 
+import com.sda.coursemanger.exceptions.NotFoundException;
+import com.sda.coursemanger.user.model.Role;
 import com.sda.coursemanger.user.model.User;
 import com.sda.coursemanger.user.model.dto.UserDto;
-import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,13 @@ public class UserController {
     public List<UserDto> getUsers() {
         return UserMapper.mapLoessonBlockToDtoList(userRepository.findAll());
     }
+
+    @GetMapping(value = "/users/", params = "type")
+    public List<UserDto> getUsersByType(@RequestParam("type") String type) {
+        Role role = Role.valueOf(type);
+        return UserMapper.mapLoessonBlockToDtoList(userRepository.findByType(role));
+    }
+
 
     @GetMapping("/users/{id}")
     public UserDto getSingleUser(@PathVariable Long id) throws NotFoundException {

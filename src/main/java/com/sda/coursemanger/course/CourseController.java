@@ -5,9 +5,9 @@ import com.sda.coursemanger.course.model.CourseEnrollment;
 import com.sda.coursemanger.course.model.dto.CourseDetailsDto;
 import com.sda.coursemanger.course.model.dto.CourseDto;
 import com.sda.coursemanger.course.model.dto.CourseEnrollmentForm;
+import com.sda.coursemanger.exceptions.NotFoundException;
 import com.sda.coursemanger.user.UserRepository;
 import com.sda.coursemanger.user.model.User;
-import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,11 +1,11 @@
 package com.sda.coursemanger.lesson;
 
+import com.sda.coursemanger.exceptions.NotFoundException;
 import com.sda.coursemanger.lesson.model.LessonBlock;
 import com.sda.coursemanger.lesson.model.dto.LessonBlockDetailsDto;
 import com.sda.coursemanger.lesson.model.dto.LessonBlockUpdateForm;
 import com.sda.coursemanger.user.UserRepository;
 import com.sda.coursemanger.user.model.User;
-import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
