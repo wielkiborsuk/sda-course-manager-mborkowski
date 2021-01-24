@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -33,6 +35,7 @@ public class DbInitilizer implements CommandLineRunner {
     private final CourseRepository courseRepository;
     private final CourseEnrollmentRepository courseEnrollmentRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public DbInitilizer(LessonRepository lessonRepository, LessonBlockRepository lessonBlockRepository,
                         CourseRepository courseRepository, CourseEnrollmentRepository courseEnrollmentRepository,
@@ -44,6 +47,7 @@ public class DbInitilizer implements CommandLineRunner {
         this.courseEnrollmentRepository = courseEnrollmentRepository;
         this.userRepository = userRepository;
         this.context = context;
+        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -77,7 +81,7 @@ public class DbInitilizer implements CommandLineRunner {
         User user = new User();
         user.setActive(true);
         user.setLogin(login);
-        user.setPass(pass);
+        user.setPass(passwordEncoder.encode(pass));
         user.setFirstName(login);
         user.setLastName(pass);
         user.setType(type);

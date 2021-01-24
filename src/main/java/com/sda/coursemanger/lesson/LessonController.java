@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
@@ -32,7 +33,7 @@ public class LessonController {
         return LessonMapper.mapLessonBlockToDto(lessonBlock);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'TEACHER')")
     @PutMapping("/lessonblocks/{id}")
     public LessonBlockDetailsDto updateLessonBlock(@PathVariable Long id,
                                                    @RequestBody @Valid LessonBlockUpdateForm newLessonBlock) throws NotFoundException {
@@ -42,6 +43,21 @@ public class LessonController {
         lessonBlock.setSubject(newLessonBlock.getSubject());
 
         User teacher = userRepository.findById(newLessonBlock.getTeacherId())
+                .orElseThrow(() -> new NotFoundException("teacher user not found"));
+
+        lessonBlock.setTeacher(teacher);
+
+        LessonBlock updatedLessonBlock = lessonBlockRepository.save(lessonBlock);
+
+        return LessonMapper.mapLessonBlockToDto(updatedLessonBlock);
+    }
+
+    @PutMapping("/lessonblocks/{id}/assignToMe")
+    public LessonBlockDetailsDto updateLessonBlock(@PathVariable Long id, Principal principal) throws NotFoundException {
+        LessonBlock lessonBlock = lessonBlockRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("lesson block not found"));
+
+        User teacher = userRepository.findByLogin(principal.getName())
                 .orElseThrow(() -> new NotFoundException("teacher user not found"));
 
         lessonBlock.setTeacher(teacher);

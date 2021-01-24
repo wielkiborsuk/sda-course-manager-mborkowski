@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   constructor() {
-    localStorage.setItem('credentials', btoa('admin:admin'));
+    localStorage.setItem('credentials', btoa('admin-0:admin'));
   }
 
   public login(user, pass) {
