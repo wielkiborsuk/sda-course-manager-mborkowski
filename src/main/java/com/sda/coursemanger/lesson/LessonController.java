@@ -6,6 +6,7 @@ import com.sda.coursemanger.lesson.model.dto.LessonBlockDetailsDto;
 import com.sda.coursemanger.lesson.model.dto.LessonBlockUpdateForm;
 import com.sda.coursemanger.user.UserRepository;
 import com.sda.coursemanger.user.model.User;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class LessonController {
         return LessonMapper.mapLessonBlockToDto(lessonBlock);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/lessonblocks/{id}")
     public LessonBlockDetailsDto updateLessonBlock(@PathVariable Long id,
                                                    @RequestBody @Valid LessonBlockUpdateForm newLessonBlock) throws NotFoundException {
