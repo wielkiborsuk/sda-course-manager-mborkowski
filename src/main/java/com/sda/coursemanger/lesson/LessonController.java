@@ -8,6 +8,8 @@ import com.sda.coursemanger.user.UserRepository;
 import com.sda.coursemanger.user.model.User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class LessonController {
@@ -31,7 +33,7 @@ public class LessonController {
 
     @PutMapping("/lessonblocks/{id}")
     public LessonBlockDetailsDto updateLessonBlock(@PathVariable Long id,
-                                                   @RequestBody LessonBlockUpdateForm newLessonBlock) throws NotFoundException {
+                                                   @RequestBody @Valid LessonBlockUpdateForm newLessonBlock) throws NotFoundException {
         LessonBlock lessonBlock = lessonBlockRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("lesson block not found"));
 

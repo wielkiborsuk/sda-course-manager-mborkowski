@@ -33,8 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .mvcMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .httpBasic()
                 .and()
